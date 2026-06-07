@@ -13,6 +13,15 @@ interface Props {
 
 export default function UserPreferencesDialog({ onCloseArea, userPreferences, saveUserPreferences }: Props) {
   const { t } = useTranslation();
+  function toggleplaySoundEffects() {
+    const modifiedPreferences = {
+      ...userPreferences,
+      playSoundEffects: !userPreferences.playSoundEffects,
+      soundOnStrike: !userPreferences.playSoundEffects,
+    };
+
+    saveUserPreferences(modifiedPreferences);
+  }
   function toggleSoundOnStrike() {
     const modifiedPreferences = { ...userPreferences, soundOnStrike: !userPreferences.soundOnStrike };
     saveUserPreferences(modifiedPreferences);
@@ -34,7 +43,16 @@ export default function UserPreferencesDialog({ onCloseArea, userPreferences, sa
 
           <div className="mb4 mb5-l">
             <div className="flex flex-row justify-start-l items-center">
-              <Checkbox checked={userPreferences.soundOnStrike} onChange={() => toggleSoundOnStrike()} />
+              <Checkbox checked={userPreferences.playSoundEffects} onChange={() => toggleplaySoundEffects()} />
+              &nbsp;
+              <Txt value={t("playSoundEffects")} />
+            </div>
+            <div className="flex flex-row justify-start-l items-center">
+              <Checkbox
+                checked={userPreferences.soundOnStrike}
+                disabled={!userPreferences.playSoundEffects}
+                onChange={() => toggleSoundOnStrike()}
+              />
               &nbsp;
               <Txt value={t("soundOnStrike")} />
             </div>

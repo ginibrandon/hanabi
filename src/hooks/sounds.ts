@@ -38,14 +38,14 @@ export function useSoundEffects() {
    * Handle notification sounds.
    */
   useEffect(() => {
-    if (!selfPlayer?.notified) return;
+    if (!selfPlayer?.notified || !userPreferences.playSoundEffects) return;
 
     playSound(`/static/sounds/bell.mp3`);
     vibrate(200);
     const timeout = setTimeout(() => setNotification(game, selfPlayer, false), 10000);
 
     return () => clearTimeout(timeout);
-  }, [selfPlayer, selfPlayer?.notified, game]);
+  }, [selfPlayer, selfPlayer?.notified, game, userPreferences.playSoundEffects]);
 
   useEffect(() => {
     function determineLastGameEvent(): RecognizedAction {
@@ -81,10 +81,18 @@ export function useSoundEffects() {
 
     if (isReplaying) return;
     if (!turn) return;
+    if (!userPreferences.playSoundEffects) return;
     const namedEvent = determineLastGameEvent();
     if (!namedEvent) return;
     const soundFile = SoundsForAction[namedEvent];
 
     playSound(soundFile);
-  }, [turnsCount, previousTurnsCount, turn, userPreferences.soundOnStrike, isReplaying]);
+  }, [
+    turnsCount,
+    previousTurnsCount,
+    turn,
+    userPreferences.playSoundEffects,
+    userPreferences.soundOnStrike,
+    isReplaying,
+  ]);
 }

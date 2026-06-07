@@ -249,6 +249,7 @@ export const en = {
   learnWhileWaiting: "Learn the basics of Hanab while waiting",
   learnHanabEnglish: "Learn Hanab - ",
   userPreferences: "User Preferences",
+  playSoundEffects: "Play sound effects",
   soundOnStrike: "Play sound when a strike occurs",
   playFireworksAtGameEnd: "Play fireworks at game end",
   learn: {
